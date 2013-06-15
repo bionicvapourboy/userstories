@@ -1,0 +1,5 @@
+userstories_core:
+    resource: "@UserstoriesCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
