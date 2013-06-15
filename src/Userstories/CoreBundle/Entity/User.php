@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
+ * @ORM\Table()
  * @ORM\Entity
- * @ORM\Table(name="user")
  */
 class User extends BaseUser
 {
@@ -19,6 +19,11 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Story",mappedBy="user")
+     */
+    protected $stories;
 
     public function __construct()
     {
@@ -33,5 +38,38 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add stories
+     *
+     * @param \Userstories\CoreBundle\Entity\Story $stories
+     * @return User
+     */
+    public function addStorie(\Userstories\CoreBundle\Entity\Story $stories)
+    {
+        $this->stories[] = $stories;
+
+        return $this;
+    }
+
+    /**
+     * Remove stories
+     *
+     * @param \Userstories\CoreBundle\Entity\Story $stories
+     */
+    public function removeStorie(\Userstories\CoreBundle\Entity\Story $stories)
+    {
+        $this->stories->removeElement($stories);
+    }
+
+    /**
+     * Get stories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStories()
+    {
+        return $this->stories;
     }
 }
