@@ -35,6 +35,10 @@ class Story
      */
     protected $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Estimate",mappedBy="story")
+     */
+    protected $estimates;
 
     /**
      * Get id
@@ -78,17 +82,57 @@ class Story
     public function setUser(\Userstories\CoreBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Userstories\CoreBundle\Entity\User 
+     * @return \Userstories\CoreBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->estimates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add estimates
+     *
+     * @param \Userstories\CoreBundle\Entity\Estimate $estimates
+     * @return Story
+     */
+    public function addEstimate(\Userstories\CoreBundle\Entity\Estimate $estimates)
+    {
+        $this->estimates[] = $estimates;
+    
+        return $this;
+    }
+
+    /**
+     * Remove estimates
+     *
+     * @param \Userstories\CoreBundle\Entity\Estimate $estimates
+     */
+    public function removeEstimate(\Userstories\CoreBundle\Entity\Estimate $estimates)
+    {
+        $this->estimates->removeElement($estimates);
+    }
+
+    /**
+     * Get estimates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstimates()
+    {
+        return $this->estimates;
     }
 }

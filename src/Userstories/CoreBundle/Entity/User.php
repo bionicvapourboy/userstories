@@ -25,6 +25,11 @@ class User extends BaseUser
      */
     protected $stories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Estimate",mappedBy="user")
+     */
+    protected $estimates;
+
     public function __construct()
     {
         parent::__construct();
@@ -71,5 +76,38 @@ class User extends BaseUser
     public function getStories()
     {
         return $this->stories;
+    }
+
+    /**
+     * Add estimates
+     *
+     * @param \Userstories\CoreBundle\Entity\Estimate $estimates
+     * @return User
+     */
+    public function addEstimate(\Userstories\CoreBundle\Entity\Estimate $estimates)
+    {
+        $this->estimates[] = $estimates;
+    
+        return $this;
+    }
+
+    /**
+     * Remove estimates
+     *
+     * @param \Userstories\CoreBundle\Entity\Estimate $estimates
+     */
+    public function removeEstimate(\Userstories\CoreBundle\Entity\Estimate $estimates)
+    {
+        $this->estimates->removeElement($estimates);
+    }
+
+    /**
+     * Get estimates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstimates()
+    {
+        return $this->estimates;
     }
 }
